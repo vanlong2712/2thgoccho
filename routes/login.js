@@ -1,57 +1,22 @@
 var express = require('express');
 var router = express.Router();
-const db=require('./../models/dbUser');
+const bcrypt = require('bcryptjs');
+const dbUser=require('./../models/dbUser');
 
-var session = require('express-session');
-const flash= require('connect-flash');
 const Passport=require('Passport');
 const LocalStrategy=require('Passport-local').Strategy;
 
-router.use(session({secret:"mysecret"}));
-router.use(Passport.initialize());
-router.use(Passport.session());
- router.use(flash());
-
-router.get("/login-signup",function(req,res) {
-	res.render('login-signup',{message: req.flash('signupMessage')});
+router.route('/signup')
+.get((req,res,next) => res.redirect('/login-signup'))
+.post(Passport.authenticate('local-signup', {failureRedirect: '/signup'}), (req, res, next) => {
+  req.toastr.success('Bạn đã đăng ký thành công');
+  res.render('index', {req: req});
 })
 
-router.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
- router.route('/signup').get((req,res)=>res.render('login-signup')).post(Passport.authenticate('local-signup',
-  {failureRedirect:'login-signup',successRedirect:'/', failureFlash : true}));
-
- router.route('/login').get((req,res)=>res.render('login-signup')).post(function(req,res,next) {
-  Passport.authenticate('local-login',function(err,user,info) {
-    if(err) {
-      return next(err);
-    }
-    if (!user) { return res.redirect('/login-signup'); }
-
-	 req.logIn(user, function(err) {
-	      if (err) { return next(err); }
-	      else {
-	        if(user.role==1) {
-	          return res.redirect('/admin');
-	        }
-	      	return res.redirect('/');
-	      }
-	    });
-	  })(req, res, next);
-});
-
-router.get('/admin',function(req,res,) {
-    if(req.user.role==1)
-		{
-      res.render('admin', {
-          user : req.user // get the user out of session and pass to template
-      });
-		} else{
-			res.send('what???', 404);
-		}
+router.route('/login')
+.get((req,res,next) => res.redirect('/login-signup'))
+.post(Passport.authenticate('local-login', {failureRedirect: '/login'}), (req, res, next) => {
+  res.redirect('/');
 });
 
 Passport.use('local-signup', new LocalStrategy({
@@ -60,16 +25,16 @@ Passport.use('local-signup', new LocalStrategy({
     passwordField : 'password',
     passReqToCallback : true // allows us to pass back the entire request to the callback
 }, function(req, username, password, done) {
-	console.log('chay vo use');
-	db.findOne({'username':username},function(err,user) {
+	console.log('chay vo local-signup');
+	dbUser.findOne({'username': req.body.username},function(err,user) {
 		if(err){
 			return done(err);
 		}
 		 if (user) {
-        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+        return done(null, false, req.toastr.error('That email is already taken.'));
     } else {
-       const newUser   = new db({
-         	username:username,
+       const newUser   = new dbUser({
+         	username:req.body.username,
          	firstName:req.body.firstName,
          	lastName:req.body.lastName,
          	email:req.body.email,
@@ -79,50 +44,44 @@ Passport.use('local-signup', new LocalStrategy({
        newUser.save().then((err) =>  done(null,newUser));
     }
 	})
-}))
-
+}));
 
 Passport.use('local-login', new LocalStrategy({
-  // by default, local strategy uses username and password, we will override with email
-  usernameField : 'username',
-  passwordField : 'password',
-  passReqToCallback : true // allows us to pass back the entire request to the callback
-}, function(req, username, password, done) { // callback with email and password from our form
+  usernameField: 'username',
+  passwordField: 'password',
+  passReqToCallback: true
+}, (req, username, password, done) => {
+  dbUser.findOne({'username': username}).then((user) => {
+    if (!user) {
+      req.toastr.error('Không tìm thấy tên đăng nhập này')
+      return done(null,false);
+    }
 
-  // find a user whose email is the same as the forms email
-  // we are checking to see if the user trying to login already exists
- db.findOne({'username':username }, function(err, user) {
-      // if there are any errors, return the error before anything else
-      if (err)
-          return done(err);
+    bcrypt.compare(password, user.password, (err, res) => {
+      if (res) {
+        req.toastr.success('Bạn đã đăng nhập thành công', `Xin chào ${user.username}`);
+        return done(null,user);
+      } else {
+        req.toastr.error('Sai mật khẩu hoặc tài khoản');
+        return done(null, false);
+      }
+    })
+  }).catch((e) => {
+    req.toastr.error('Đăng nhập không thành công');
+    return done(e);
+  });
 
-      // if no user is found, return the message
-      if (!user)
-          return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+  Passport.serializeUser((user, done) => {
+    done(null, user.username)
+  });
 
-      // if the user is found but the password is wrong
-      if (user.password!=password)
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-
-      // all is well, return successful user
-      return done(null, user);
+  Passport.deserializeUser((username, done) => {
+    dbUser.findOne({username},(err,user) => {
+  		console.log("da tim thay trong serialize")
+  		done(null,user);
+  	})
   });
 
 }));
 
-Passport.serializeUser(function(user, done) {
-  console.log('asd');
-  done(null, user.username);
-});
-
-Passport.deserializeUser((username,done)=>
-{
-	//day la deserialize
-	console.log('desrialize');
-	db.findOne({username},(err,user)=>
-	{
-		console.log("da tim thay trong serialize")
-		done(null,user);
-	})
-})
 module.exports = router;

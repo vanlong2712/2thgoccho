@@ -11,6 +11,13 @@ let UserSchema = new Schema({
     default: shortid.generate,
     unique: true
   },
+  username: {
+    type: String,
+    trim: true,
+    required: 'Please enter a username',
+    minlength: 2,
+    maxlength: 35
+  },
   firstName: {
     type: String,
     trim: true,

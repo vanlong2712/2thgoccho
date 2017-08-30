@@ -2,10 +2,11 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var flash= require('connect-flash');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-const flash= require('connect-flash');
+var toastr = require('express-toastr');
 
 const Passport=require('Passport');
 const LocalStrategy=require('Passport-local').Strategy;
@@ -29,6 +30,13 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+app.use(Passport.initialize());
+app.use(Passport.session());
+app.use(flash());
+// Load express-toastr
+// You can pass an object of default options to toastr(), see example/index.coffee
+app.use(toastr());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./routes/index'));
@@ -37,9 +45,6 @@ app.use(require('./routes/contact'));
 app.use(require('./routes/listing'));
 app.use(require('./routes/details'));
 
-app.use(Passport.initialize());
-app.use(Passport.session());
-app.use(flash());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
