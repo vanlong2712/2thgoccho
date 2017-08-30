@@ -1,18 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+/* GET users listing. */
+router.get('/details', function(req, res, next) {
 			if(req.isAuthenticated())
 {  
-        res.render('trangchu', {
+
+        res.render('details', {
             user : req.user // get the user out of session and pass to template
         });
- }
+  
+}
+ 
  else
  {
- 	res.render('trangchu');
+ 	res.render('details');
  }
+})
 
- 		})
 module.exports = router;

@@ -1,18 +1,17 @@
 var express = require('express');
 var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
+router.get("/contact",function(req,res)
+	{
 			if(req.isAuthenticated())
 {  
-        res.render('trangchu', {
+        res.render('contact', {
             user : req.user // get the user out of session and pass to template
         });
  }
  else
  {
- 	res.render('trangchu');
+ 	res.render('contact');
  }
+});
 
- 		})
 module.exports = router;
