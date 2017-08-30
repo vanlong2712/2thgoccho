@@ -1,5 +1,5 @@
 
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
@@ -11,14 +11,14 @@ let UserSchema = new Schema({
     default: shortid.generate,
     unique: true
   },
-  firstNname: {
+  firstName: {
     type: String,
     trim: true,
     required: 'Please enter a First Name',
     minlength: 2,
     maxlength: 35
   },
-  lastNname: {
+  lastName: {
     type: String,
     trim: true,
     required: 'Please enter Last name',
