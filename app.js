@@ -47,8 +47,12 @@ app.use(function(req, res, next) {
 // catch 404 and forward to error handler
 
 
+<<<<<<< HEAD
 app.listen(3000,function()
 	{
 		console.log("chay")
 	});
+=======
+
+>>>>>>> 37bd19d5be17548cad72ceea07b2494505e629db
 module.exports = app;

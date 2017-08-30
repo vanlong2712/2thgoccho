@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<head>
+
+<!-- Basic Page Needs
+================================================== -->
+<title>Findeo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- CSS
+================================================== -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/colors/main.css" id="colors">
+
+</head>
+
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+
+<!-- Header Container
+================================================== -->
+<header id="header-container">
+
+	<!-- Topbar -->
+	<div id="top-bar">
+		<div class="container">
+
+			<!-- Left Side Content -->
+			<div class="left-side">
+
+				<!-- Top bar -->
+				<ul class="top-bar-menu">
+					<li><i class="fa fa-phone"></i> (123) 123-456 </li>
+					<li><i class="fa fa-envelope"></i> <a href="#">office@example.com</a></li>
+					<li>
+						<div class="top-bar-dropdown">
+							<span>Dropdown Menu</span>
+							<ul class="options">
+								<li><div class="arrow"></div></li>
+								<li><a href="#">Nice First Link</a></li>
+								<li><a href="#">Second Link With Long Title</a></li>
+								<li><a href="#">Third Link</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+
+			</div>
+			<!-- Left Side Content / End -->
+
+
+			<!-- Left Side Content -->
+			<div class="right-side">
+
+				<!-- Social Icons -->
+				<ul class="social-icons">
+					<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+					<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+					<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+					<li><a class="pinterest" href="#"><i class="icon-pinterest"></i></a></li>
+				</ul>
+
+			</div>
+			<!-- Left Side Content / End -->
+
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<!-- Topbar / End -->
+
+
+	<!-- Header -->
+	<div id="header">
+		<div class="container">
+
+			<!-- Left Side Content -->
+			<div class="left-side">
+
+				<!-- Logo -->
+				<div id="logo">
+					<a href="/"><img src="images/logo.png" alt=""></a>
+					<a href="/"><img src="images/flaties.png" alt=""></a>
+				</div>
+
+
+				<!-- Mobile Navigation -->
+				<div class="menu-responsive">
+					<i class="fa fa-reorder menu-trigger"></i>
+				</div>
+
+
+				<!-- Main Navigation -->
+				<nav id="navigation" class="style-1">
+					<ul id="responsive">
+
+						<li><a class="current" href="/">Home</a>
+
+						</li>
+
+						<li><a href="listing">Listings</a>
+
+						</li>
+
+						<li><a href="contact">Contact Us </a>
+
+						</li>
+						<% if (typeof user == 'object' && user) { %>
+						<li><a href="logout">Log Out </a> </li>
+						<%}else {%>
+					
+							<%}%>
+
+
+
+					</ul>
+				</nav>
+				<div class="clearfix"></div>
+				<!-- Main Navigation / End -->
+
+			</div>
+			<!-- Left Side Content / End -->
+
+			<!-- Right Side Content / End -->
+			<div class="right-side">
+				<!-- Header Widget -->
+				<div class="header-widget">
+				<% if (typeof user == 'object' && user) { %>
+
+					<a href="/"  class="sign-in"><i class="fa fa-user"></i> Hi, <%= user.username %></a>
+					<%} else {%>
+						<a href="login-signup" class="sign-in"><i class="fa fa-user"></i> Log In / Register</a>
+							<%}%>
+
+
+					<a href="submit-property" class="button border" >Submit Property</a>
+
+				</div>
+				<!-- Header Widget / End -->
+			</div>
+			<!-- Right Side Content / End -->
+
+		</div>
+	</div>
+	<!-- Header / End -->
+
+</header>
+<div class="clearfix"></div>
+<!-- Header Container / End -->
