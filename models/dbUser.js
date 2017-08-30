@@ -119,19 +119,6 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.encryptPassword = function(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-};
-
-UserSchema.methods.validPassword = function(password) {
-  if(this.password) {
-    return bcrypt.compareSync(password, this.password);
-  }
-  return false;
-};
-
-
-
 let User = mongoose.model('User', UserSchema);
 
 module.exports = User;

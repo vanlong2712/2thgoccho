@@ -31,7 +31,8 @@ Passport.use('local-signup', new LocalStrategy({
 			return done(err);
 		}
 		 if (user) {
-        return done(null, false, req.toastr.error('That email is already taken.'));
+       req.toastr.error('That email is already taken.')
+        return done(null, false);
     } else {
        const newUser   = new dbUser({
          	username:req.body.username,
