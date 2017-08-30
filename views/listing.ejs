@@ -1,156 +1,4 @@
-<!DOCTYPE html>
-<head>
-
-<!-- Basic Page Needs
-================================================== -->
-<title>Findeo</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<!-- CSS
-================================================== -->
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/colors/main.css" id="colors">
-
-</head>
-
-<body>
-
-<!-- Wrapper -->
-<div id="wrapper">
-
-
-<!-- Header Container
-================================================== -->
-<header id="header-container">
-
-	<!-- Topbar -->
-	<div id="top-bar">
-		<div class="container">
-
-			<!-- Left Side Content -->
-			<div class="left-side">
-
-				<!-- Top bar -->
-				<ul class="top-bar-menu">
-					<li><i class="fa fa-phone"></i> (123) 123-456 </li>
-					<li><i class="fa fa-envelope"></i> <a href="#">office@example.com</a></li>
-					<li>
-						<div class="top-bar-dropdown">
-							<span>Dropdown Menu</span>
-							<ul class="options">
-								<li><div class="arrow"></div></li>
-								<li><a href="#">Nice First Link</a></li>
-								<li><a href="#">Second Link With Long Title</a></li>
-								<li><a href="#">Third Link</a></li>
-							</ul>
-						</div>
-					</li>
-				</ul>
-
-			</div>
-			<!-- Left Side Content / End -->
-
-
-			<!-- Left Side Content -->
-			<div class="right-side">
-
-				<!-- Social Icons -->
-				<ul class="social-icons">
-					<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-					<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-					<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-					<li><a class="pinterest" href="#"><i class="icon-pinterest"></i></a></li>
-				</ul>
-
-			</div>
-			<!-- Left Side Content / End -->
-
-		</div>
-	</div>
-	<div class="clearfix"></div>
-	<!-- Topbar / End -->
-
-
-	<!-- Header -->
-	<div id="header">
-		<div class="container">
-			
-			<!-- Left Side Content -->
-			<div class="left-side">
-				
-				<!-- Logo -->
-				<div id="logo">
-					<a href="/"><img src="images/logo.png" alt=""></a>
-					<a href="/"><img src="images/flaties.png" alt=""></a>	
-
-				</div>
-
-
-				<!-- Mobile Navigation -->
-				<div class="menu-responsive">
-					<i class="fa fa-reorder menu-trigger"></i>
-				</div>
-
-
-				<!-- Main Navigation -->
-				<nav id="navigation" class="style-1">
-					<ul id="responsive">
-
-						<li><a href="/">Home</a>
-							
-						</li>
-
-						<li><a class="current" href="#">Listings</a>
-							
-						</li>
-
-						<li><a href="contact">Contact Us</a>
-						
-						</li>
-			
-						</li>
-						<% if (typeof user == 'object' && user) { %>
-						<li><a href="logout">Log Out </a> </li>
-						<%}else {%>
-					
-							<%}%>
-
-					
-
-					</ul>
-				</nav>
-				<div class="clearfix"></div>
-				<!-- Main Navigation / End -->
-				
-			</div>
-			<!-- Left Side Content / End -->
-
-			<!-- Right Side Content / End -->
-			<div class="right-side">
-				<!-- Header Widget -->
-					<div class="header-widget">
-				<% if (typeof user == 'object' && user) { %>
-				
-					<a href="/"  class="sign-in"><i class="fa fa-user"></i> Hi, <%= user.username %></a>
-					<%} else {%>
-						<a href="login-signup" class="sign-in"><i class="fa fa-user"></i> Log In / Register</a>
-							<%}%>
-
-
-					<a href="submit-property" class="button border">Submit Property</a>
-				</div>
-				<!-- Header Widget / End -->
-			</div>
-			<!-- Right Side Content / End -->
-
-		</div>
-	</div>
-	<!-- Header / End -->
-
-</header>
-<div class="clearfix"></div>
-<!-- Header Container / End -->
+<%- include partials/header %>
 
 
 <!-- Titlebar
@@ -162,7 +10,7 @@
 
 				<h2>Listings</h2>
 				<span>Flatmate Wanted</span>
-				
+
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
@@ -200,7 +48,7 @@
 
 						<div class="sort-by-select">
 							<select data-placeholder="Default order" class="chosen-select-no-single" >
-								<option>Default Order</option>	
+								<option>Default Order</option>
 								<option>Price Low to High</option>
 								<option>Price High to Low</option>
 								<option>Newest Properties</option>
@@ -212,14 +60,14 @@
 
 			</div>
 
-			
+
 			<!-- Listings Container -->
 			<div class="row">
 
 				<!-- Listing Item -->
-				<% 
-					
-					propertyArray.forEach(function(item) 
+				<%
+
+					propertyArray.forEach(function(item)
 			{%>
 
 
@@ -252,12 +100,12 @@
 							<% });%>
 
 
-				<!-- Listing Item / End -->		
+				<!-- Listing Item / End -->
 
 			</div>
 			<!-- Listings Container / End -->
 
-			
+
 			<!-- Pagination -->
 			<div class="clearfix"></div>
 
@@ -266,12 +114,12 @@
 			{%>
 				<nav class="pagination">
 					<ul>
-						
+
 				<% } %></a></li>
 				<%for (var i=1;i<=pagination.pagination.pages;i++)
 				{			if(currentPage==i)
 							{%>
-					
+
         					<li><a href="" class="current-page"><%=i%></a></li>
 				 <%}
 				 else
@@ -279,7 +127,7 @@
 				 		<li><a href="/listing?page=<%=i %>"><%= i %></a></li>
 				 <%}%>
 				 <%}%>
-				
+
 
 
 					</ul>
@@ -318,7 +166,7 @@
 						<!-- Status -->
 						<div class="col-md-12">
 							<select data-placeholder="Any Status" class="chosen-select-no-single" >
-								
+
 							</select>
 						</div>
 					</div>
@@ -337,8 +185,8 @@
 							<option value=<%=item.idCity%> >
 								<%=item.name%>
 							</option>
-							<%});%>			
-								
+							<%});%>
+
 							</select>
 						</div>
 					</div>
@@ -361,11 +209,11 @@
 					<div class="row with-forms">
 						<!-- Cities -->
 						<div class="col-md-12">
-									
-							<select id="selectSuburb" name="idSuburb" class='suburb'>
-							<option label="Any Suburbs"></option>	
 
-											
+							<select id="selectSuburb" name="idSuburb" class='suburb'>
+							<option label="Any Suburbs"></option>
+
+
 							</select>
 						</div>
 					</div>
@@ -380,8 +228,8 @@
 						<div class="col-md-6">
 						Rent per week
 							<select data-placeholder="From" class="chosen-select-no-single" name="priceFrom" >
-								<option label="blank"></option>	
-								<option value='0' selected="selected">Any</option>	
+								<option label="blank"></option>
+								<option value='0' selected="selected">Any</option>
 								<option value="50">$50</option>
 								<option value="100">$100</option>
 								<option value="150">$150</option>
@@ -396,7 +244,7 @@
 								<option value="800">$800</option>
 								<option value="1000">$1000</option>
 
-								
+
 							</select>
 						</div>
 
@@ -404,8 +252,8 @@
 						<div class="col-md-6">
 						To
 							<select data-placeholder="To" class="chosen-select-no-single" name="priceTo" >
-									<option label="blank"></option>	
-								<option value='0' selected="selected">Any</option>	
+									<option label="blank"></option>
+								<option value='0' selected="selected">Any</option>
 								<option value="50">$50</option>
 								<option value="100">$100</option>
 								<option value="150">$150</option>
@@ -428,24 +276,24 @@
 					<br>
 
 					<!-- Area Range -->
-			
+
 
 					<!-- More Search Options -->
 					<a href="#" class="more-search-options-trigger margin-bottom-10 margin-top-30" data-open-title="Additional Features" data-close-title="Additional Features"></a>
 					<div class="more-search-options relative">
 
 						<!-- Checkboxes -->
-						<div class="checkboxes one-in-row margin-bottom-10">	
-					
+						<div class="checkboxes one-in-row margin-bottom-10">
+
 							<input  id="check-2" type="checkbox" value="Tidy" name="checkTidy">
 							<label for="check-2">Tidy</label>
 
 							<input id="check-3" type="checkbox" name="checkSwim">
 							<label for="check-3">Swimming Pool</label>
 
-				
+
 							<input id="check-5" type="checkbox" name="checkLaundry">
-							<label for="check-5">Laundry Room</label>	
+							<label for="check-5">Laundry Room</label>
 
 
 							<input id="check-6" type="checkbox" name="checkGym">
@@ -456,7 +304,7 @@
 
 							<input id="check-8" type="checkbox" name="checkWindow">
 							<label for="check-8">Window Covering</label>
-					
+
 						</div>
 						<!-- Checkboxes / End -->
 
@@ -479,125 +327,4 @@
 
 <!-- Footer
 ================================================== -->
-<div class="margin-top-55"></div>
-
-<div id="footer" class="sticky-footer">
-	<!-- Main -->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-5 col-sm-6">
-				<img class="footer-logo" src="images/logo.png" alt="">
-				<br><br>
-				<p>Morbi convallis bibendum urna ut viverra. Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper.</p>
-			</div>
-
-			<div class="col-md-4 col-sm-6 ">
-				<h4>Helpful Links</h4>
-				<ul class="footer-links">
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Sign Up</a></li>
-					<li><a href="#">My Account</a></li>
-					<li><a href="#">Add Property</a></li>
-					<li><a href="#">Pricing</a></li>
-					<li><a href="#">Privacy Policy</a></li>
-				</ul>
-
-				<ul class="footer-links">
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Our Agents</a></li>
-					<li><a href="#">How It Works</a></li>
-					<li><a href="#">Contact</a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>		
-
-			<div class="col-md-3  col-sm-12">
-				<h4>Contact Us</h4>
-				<div class="text-widget">
-					<span>12345 Little Lonsdale St, Melbourne</span> <br>
-					Phone: <span>(123) 123-456 </span><br>
-					E-Mail:<span> <a href="#">office@example.com</a> </span><br>
-				</div>
-
-				<ul class="social-icons margin-top-20">
-					<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-					<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-					<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-					<li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-				</ul>
-
-			</div>
-
-		</div>
-		
-		<!-- Copyright -->
-		<div class="row">
-			<div class="col-md-12">
-				<div class="copyrights">© 2016 Findeo. All Rights Reserved.</div>
-			</div>
-		</div>
-
-	</div>
-
-</div>
-<!-- Footer / End -->
-
-
-<!-- Back To Top Button -->
-<div id="backtotop"><a href="#"></a></div>
-
-
-<!-- Scripts
-================================================== -->
-<script type="text/javascript" src="scripts/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="scripts/chosen.min.js"></script>
-<script type="text/javascript" src="scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
-<script type="text/javascript" src="scripts/rangeSlider.js"></script>
-<script type="text/javascript" src="scripts/sticky-kit.min.js"></script>
-<script type="text/javascript" src="scripts/slick.min.js"></script>
-<script type="text/javascript" src="scripts/jquery.jpanelmenu.js"></script>
-<script type="text/javascript" src="scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="scripts/masonry.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
-<script type="text/javascript" src="scripts/handleSelect.js"></script>
-
-<!-- Style Switcher
-================================================== -->
-<script src="scripts/switcher.js"></script>
-
-<div id="style-switcher">
-	<h2>Color Switcher <a href="#"><i class="sl sl-icon-settings"></i></a></h2>
-	
-	<div>
-		<ul class="colors" id="color1">
-			<li><a href="#" class="blue" title="Blue"></a></li>
-			<li><a href="#" class="green" title="Green"></a></li>
-			<li><a href="#" class="orange" title="Orange"></a></li>
-			<li><a href="#" class="navy" title="Navy"></a></li>
-			<li><a href="#" class="yellow" title="Yellow"></a></li>
-			<li><a href="#" class="peach" title="Peach"></a></li>
-			<li><a href="#" class="beige" title="Beige"></a></li>
-			<li><a href="#" class="purple" title="Purple"></a></li>
-			<li><a href="#" class="celadon" title="Celadon"></a></li>
-			<li><a href="#" class="pink" title="Pink"></a></li>
-			<li><a href="#" class="red" title="Red"></a></li>
-			<li><a href="#" class="brown" title="Brown"></a></li>
-			<li><a href="#" class="cherry" title="Cherry"></a></li>
-			<li><a href="#" class="cyan" title="Cyan"></a></li>
-			<li><a href="#" class="gray" title="Gray"></a></li>
-			<li><a href="#" class="olive" title="Olive"></a></li>
-		</ul>
-	</div>
-		
-</div>
-<!-- Style Switcher / End -->
-
-
-</div>
-<!-- Wrapper / End -->
-
-
-</body>
-</html>
+<%- include partials/footer %>
