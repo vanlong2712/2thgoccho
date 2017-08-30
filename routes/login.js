@@ -1,39 +1,32 @@
-		var express = require('express');
+var express = require('express');
 var router = express.Router();
-const bodyParser=require('body-parser');
-const session=require('express-session');
-const flash= require('connect-flash');
-const db=require('../models/db.js');
+const db=require('../models/db');
 
-const Passport=require('Passport');
-const LocalStrategy=require('Passport-local').Strategy;
-router.use(bodyParser.urlencoded({extended:true}));
-router.use(bodyParser.json());
+// const Passport=require('Passport');
+// const LocalStrategy=require('Passport-local').Strategy;
+//
+// router.use(session({secret:"mysecret"}));
+// router.use(Passport.initialize());
+// router.use(Passport.session());
+//  router.use(flash());
 
-router.use(session({secret:"mysecret"
-}));
-router.use(Passport.initialize());
-router.use(Passport.session());
- router.use(flash());
-
-router.get("/login-signup",function(req,res)
-{
+router.get("/login-signup",function(req,res) {
 	res.render('login-signup',{message: req.flash('signupMessage')});
-
 })
-    router.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 
  router.route('/signup').get((req,res)=>res.render('login-signup')).post(Passport.authenticate('local-signup',
   {failureRedirect:'login-signup',successRedirect:'/', failureFlash : true}));
- 
+
      router.route('/login').get((req,res)=>res.render('login-signup')).post(function(req,res,next)
      {
       Passport.authenticate('local-login',function(err,user,info)
       {
-        if(err) 
+        if(err)
           {
             return next(err);
           }
@@ -55,7 +48,7 @@ router.get("/login-signup",function(req,res)
     router.get('/admin',function(req,res,)
   {
       if(req.user.role==1)
-{  
+{
         res.render('admin', {
             user : req.user // get the user out of session and pass to template
         });
@@ -90,12 +83,12 @@ router.get("/login-signup",function(req,res)
              	lastName:req.body.lastName,
              	email:req.body.email,
              	password:password ,
-              role:0,       
+              role:0,
 
              });
              newUser.save((err)=>
-             {	
-             	
+             {
+
              	return done(null,newUser);
              })
 
@@ -136,9 +129,9 @@ Passport.serializeUser(function(user, done) {
   console.log('asd');
   done(null, user.username);
 });
- 
+
 Passport.deserializeUser((username,done)=>
-{ 
+{
 	//day la deserialize
 	console.log('desrialize');
 	db.findOne({username},(err,user)=>
