@@ -5,17 +5,11 @@ var logger = require('morgan');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-const session=require('express-session');
 const flash= require('connect-flash');
 
 const Passport=require('Passport');
 const LocalStrategy=require('Passport-local').Strategy;
 
-app.use(require('./routes/index'));
-app.use(require('./routes/login'));
-app.use(require('./routes/contact'));
-app.use(require('./routes/listing'));
-app.use(require('./routes/details'));
 
 var app = express();
 const {mongoose} = require('./db/mongoose');
@@ -37,6 +31,11 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('./routes/index'));
+app.use(require('./routes/login'));
+app.use(require('./routes/contact'));
+app.use(require('./routes/listing'));
+app.use(require('./routes/details'));
 
 app.use(Passport.initialize());
 app.use(Passport.session());

@@ -1,14 +1,16 @@
 var express = require('express');
 var router = express.Router();
-const db=require('../models/db');
+const db=require('./../models/dbUser');
 
-// const Passport=require('Passport');
-// const LocalStrategy=require('Passport-local').Strategy;
-//
-// router.use(session({secret:"mysecret"}));
-// router.use(Passport.initialize());
-// router.use(Passport.session());
-//  router.use(flash());
+var session = require('express-session');
+const flash= require('connect-flash');
+const Passport=require('Passport');
+const LocalStrategy=require('Passport-local').Strategy;
+
+router.use(session({secret:"mysecret"}));
+router.use(Passport.initialize());
+router.use(Passport.session());
+ router.use(flash());
 
 router.get("/login-signup",function(req,res) {
 	res.render('login-signup',{message: req.flash('signupMessage')});
