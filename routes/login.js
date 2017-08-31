@@ -18,9 +18,8 @@ router.route('/signup')
 
 router.route('/login')
 .get((req,res,next) => res.redirect('/login-signup'))
-.post(Passport.authenticate('local-login', {failureRedirect: '/login'}), (req, res, next) => {
-  res.redirect('/');
-});
+.post(Passport.authenticate('local-login', {failureRedirect: '/login', successRedirect: '/'}));
+
 router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
@@ -66,7 +65,7 @@ Passport.use('local-login', new LocalStrategy({
 
     bcrypt.compare(password, user.password, (err, res) => {
       if (res) {
-        req.toastr.success('Bạn đã đăng nhập thành công', `Xin chào ${user.firstName}`);
+        req.toastr.success('Bạn đã đăng nhập thành công', `Xin chào ${user.lastName}`);
         return done(null,user);
       } else {
         req.toastr.error('Sai mật khẩu hoặc tài khoản');

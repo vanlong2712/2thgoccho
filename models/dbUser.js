@@ -31,10 +31,10 @@ let UserSchema = new Schema({
       token: { type: String, trim: true }
     }
   },
-  saved_homes: {
+  saved_homes: [{
     type: [Schema.Types.ObjectId],
     ref: 'Home'
-  },
+  }],
   sex: {
     type: String,
     trim: true,

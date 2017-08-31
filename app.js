@@ -22,6 +22,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'mysecret',
+    saveUninitialized: true,
+    resave: true
 }));
 app.use(Passport.initialize());
 app.use(Passport.session());
