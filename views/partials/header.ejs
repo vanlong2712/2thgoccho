@@ -9,9 +9,8 @@
 
 <!-- CSS
 ================================================== -->
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/colors/main.css" id="colors">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/colors/main.css" id="colors">
 
 </head>
 
@@ -34,8 +33,8 @@
 
 				<!-- Top bar -->
 				<ul class="top-bar-menu">
-					<li><i class="fa fa-phone"></i> (123) 123-456 </li>
-					<li><i class="fa fa-envelope"></i> <a href="#">office@example.com</a></li>
+					<li><i class="fa fa-phone"></i> 0220717763 </li>
+					<li><i class="fa fa-envelope"></i> <a href="#">phu.nguyen09995@gmail.com</a></li>
 					<li>
 						<div class="top-bar-dropdown">
 							<span>Dropdown Menu</span>
@@ -105,14 +104,14 @@
 
 						</li>
 
-						<li><a href="contact">Contact Us </a>
+						<li><a href="contact">Contact Us  </a>
 
 						</li>
-						<% if (typeof user == 'object' && user) { %>
+						<% if( typeof user !== 'undefined' && user.firstName ){ %>
 						<li><a href="logout">Log Out </a> </li>
 						<%}else {%>
-
-							<%}%>
+								
+							<% }%>
 
 
 
@@ -128,9 +127,9 @@
 			<div class="right-side">
 				<!-- Header Widget -->
 				<div class="header-widget">
-				<% if (typeof user == 'object' && user) { %>
+				<% if ( typeof user !== 'undefined' && user ) { %>
 
-					<a href="/"  class="sign-in"><i class="fa fa-user"></i> Hi, <%= user.username %></a>
+					<a href="/"  class="sign-in"><i class="fa fa-user"></i> Hi, <%= user.lastName%></a>
 					<%} else {%>
 						<a href="login-signup" class="sign-in"><i class="fa fa-user"></i> Log In / Register</a>
 							<%}%>

@@ -6,10 +6,13 @@ const dbUser=require('./../models/dbUser');
 const Passport=require('Passport');
 const LocalStrategy=require('Passport-local').Strategy;
 
+
 router.route('/signup')
 .get((req,res,next) => res.redirect('/login-signup'))
 .post(Passport.authenticate('local-signup', {failureRedirect: '/signup'}), (req, res, next) => {
   req.toastr.success('Bạn đã đăng ký thành công');
+    console.log(req.toastr);;
+
   res.render('index', {req: req});
 })
 
@@ -18,15 +21,19 @@ router.route('/login')
 .post(Passport.authenticate('local-login', {failureRedirect: '/login'}), (req, res, next) => {
   res.redirect('/');
 });
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 
 Passport.use('local-signup', new LocalStrategy({
     // by default, local strategy uses username and password, we will override with email
-    usernameField : 'username',
+    usernameField : 'email',
     passwordField : 'password',
     passReqToCallback : true // allows us to pass back the entire request to the callback
-}, function(req, username, password, done) {
+}, function(req, email, password, done) {
 	console.log('chay vo local-signup');
-	dbUser.findOne({'username': req.body.username},function(err,user) {
+	dbUser.findOne({'email': req.body.email},function(err,user) {
 		if(err){
 			return done(err);
 		}
@@ -35,7 +42,6 @@ Passport.use('local-signup', new LocalStrategy({
         return done(null, false);
     } else {
        const newUser   = new dbUser({
-         	username:req.body.username,
          	firstName:req.body.firstName,
          	lastName:req.body.lastName,
          	email:req.body.email,
@@ -48,11 +54,11 @@ Passport.use('local-signup', new LocalStrategy({
 }));
 
 Passport.use('local-login', new LocalStrategy({
-  usernameField: 'username',
+  usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
-}, (req, username, password, done) => {
-  dbUser.findOne({'username': username}).then((user) => {
+}, (req, email, password, done) => {
+  dbUser.findOne({'email': email}).then((user) => {
     if (!user) {
       req.toastr.error('Không tìm thấy tên đăng nhập này')
       return done(null,false);
@@ -60,7 +66,7 @@ Passport.use('local-login', new LocalStrategy({
 
     bcrypt.compare(password, user.password, (err, res) => {
       if (res) {
-        req.toastr.success('Bạn đã đăng nhập thành công', `Xin chào ${user.username}`);
+        req.toastr.success('Bạn đã đăng nhập thành công', `Xin chào ${user.firstName}`);
         return done(null,user);
       } else {
         req.toastr.error('Sai mật khẩu hoặc tài khoản');
@@ -72,17 +78,16 @@ Passport.use('local-login', new LocalStrategy({
     return done(e);
   });
 
+}));
+
   Passport.serializeUser((user, done) => {
-    done(null, user.username)
+    done(null, user.email)
   });
 
-  Passport.deserializeUser((username, done) => {
-    dbUser.findOne({username},(err,user) => {
-  		console.log("da tim thay trong serialize")
+  Passport.deserializeUser((email, done) => {
+    dbUser.findOne({email},(err,user) => {
   		done(null,user);
   	})
   });
-
-}));
 
 module.exports = router;
