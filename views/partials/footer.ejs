@@ -80,12 +80,12 @@
 <script type="text/javascript" src="/scripts/custom.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
-<% var req = (req);
-if (req) {
-	var toastr = (req.toastr);
-	if(toastr) { %>
-	<%- req.toastr.render(); %>
-<% }} %>
+	<% if (typeof req == 'object' && req.toastr) { %>
+
+	
+	 <%- req.toastr.render(); %>
+	<%}%>
+
 <!-- Style Switcher
 ================================================== -->
 <script src="/scripts/switcher.js"></script>

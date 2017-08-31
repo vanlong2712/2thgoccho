@@ -9,12 +9,7 @@ const LocalStrategy=require('Passport-local').Strategy;
 
 router.route('/signup')
 .get((req,res,next) => res.redirect('/login-signup'))
-.post(Passport.authenticate('local-signup', {failureRedirect: '/signup'}), (req, res, next) => {
-  req.toastr.success('Bạn đã đăng ký thành công');
-    console.log(req.toastr);;
-
-  res.render('index', {req: req});
-})
+.post(Passport.authenticate('local-signup', {failureRedirect: '/signup',successRedirect:'/'}));
 
 router.route('/login')
 .get((req,res,next) => res.redirect('/login-signup'))
@@ -38,6 +33,8 @@ Passport.use('local-signup', new LocalStrategy({
 		}
 		 if (user) {
        req.toastr.error('That email is already taken.')
+           console.log(req.toastr);
+
         return done(null, false);
     } else {
        const newUser   = new dbUser({
@@ -45,9 +42,13 @@ Passport.use('local-signup', new LocalStrategy({
          	lastName:req.body.lastName,
          	email:req.body.email,
          	password:password ,
-          role:0,
        });
-       newUser.save().then((err) =>  done(null,newUser));
+
+       newUser.save().then((err) => {
+  req.toastr.success('Bạn đã đăng ký thành công');
+
+  done(null,newUser);
+       })  
     }
 	})
 }));
@@ -69,6 +70,7 @@ Passport.use('local-login', new LocalStrategy({
         return done(null,user);
       } else {
         req.toastr.error('Sai mật khẩu hoặc tài khoản');
+
         return done(null, false);
       }
     })
