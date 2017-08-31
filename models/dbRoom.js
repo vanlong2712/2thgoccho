@@ -1,51 +1,63 @@
 //step 1 require mongoose
 const mongoose=require('mongoose');
-var AutoIncrement = require('mongoose-sequence');
+const Schema = mongoose.Schema;
+const shortid = require('shortid');
 var mongoosePaginate = require('mongoose-paginate');
 
-
-mongoose.Promise=global.Promise;
-mongoose.connect('mongodb://localhost/flaties');
 //step 2: connect
 //step 3: tao Schema
 
-  const roomSchema = new mongoose.Schema({
-    propertyTitle: String,
-  	propertyDetail:String,
-  	address:String,
-  	city:String,
-  	state:String,
-  	zipCode:Number,
-  	roomsAvailable:Number,
-  	rooms:Number,
-  	bedRooms:Number,
-  	bathRooms:Number,
-  	price:Number,
-  	currentFlatmates:String,
-    img:String,
-    img2:String,
-    img3:String,
-    img4:String,
-    img5:String,
-    isGym:Boolean,
-    isSwimmingPool:Boolean,
-    isParty:Boolean,
-    isWindow:Boolean,
-    isLaundry:Boolean,
-    isParty:Boolean,
-    isTidy:Boolean,
-    ownerName:String,
-    email:String,
-    phone:String	
-
+const roomSchema = new Schema({
+  short_id: {
+    type: String,
+    default: shortid.generate,
+    unique: true
+  },
+  name: {
+    type: String,
+    required: "Room's name is required",
+    trim: true,
+    minlength: 5,
+    maxlength: 30
+  },
+  images: [String],
+  features: [false,false,false,false,false], // isShower, isAir, isWindow, isWifi, isTivi
+  peopleCapacity: Number,
+  price: {
+    type: Number,
+    required: true
+  },
+  created: {
+    type : Date,
+    default: Date.now
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  isSingle: {
+    type: Boolean,
+    default: true
+  },
+  isShare: {
+    type: Boolean,
+    default: false
+  },
+  _homeBelonged: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home'
+  },
+  _guests: {
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
+  }
 });
 
-	roomSchema.plugin(AutoIncrement, {inc_field: 'idroom'});
 	roomSchema.plugin(mongoosePaginate);
 
 //4: tao model
- const room=mongoose.model('properties',roomSchema,'properties');
- module.exports=room;
+ const room = mongoose.model('Room',roomSchema);
+ module.exports = {room};
 // room.create(
 //    {name:"All Region"}
 

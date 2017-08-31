@@ -1,6 +1,7 @@
 
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const validator = require('validator');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
 
@@ -53,7 +54,10 @@ let UserSchema = new Schema({
     trim: true,
     minlength: 5,
     unique: true,
-    lowercase: true
+    validate: {
+      validator: validator.isEmail,
+      message: '{VALUE} is not a valid email'
+    }
   },
 
   birthdate: {
